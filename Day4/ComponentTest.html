@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!--use component here-->
+      <button-counter></button-counter>
+      <button-counter></button-counter>
+      <button-counter></button-counter>
+      
+      <div :style="{'font-size': postFontSize +'px'}">
+        <blog-post @enlarge="postFontSize+=1" v-for="p in posts" :p="p" :key="p.id"></blog-post>
+      </div>  
+    </div>
+    
+    <script type="text/javascript">
+      
+      Vue.component('blog-post',{
+         props: ['p'],
+         template: `<div>
+                       <h3>{{ p.title }}</h3>
+                 <h3>{{ p.content }}</h3>
+                 <button @click="$emit('enlarge')">enlarge</button>
+              </div>`
+			  //` allows you to write a string in multiple lines
+      })
+      
+      Vue.component('button-counter',{
+        data()
+        {
+          return {
+            count:0
+          }
+        },
+        template:'<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        
+      })
+      
+      
+      var app = new Vue({
+        el:"#app",
+        data:{
+           postFontSize:16,
+           posts: [
+                { id: 1, title: 'My journey with Vue', content:'xxxx1' },
+                { id: 2, title: 'Blogging with Vue',content:'xxxx2' },
+                { id: 3, title: 'Why Vue is so fun',content:'xxxx2' }
+              ]
+        }
+      })
+    </script>
+  </body>
+</html>
